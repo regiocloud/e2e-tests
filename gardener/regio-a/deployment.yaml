@@ -1,0 +1,60 @@
+kind: Shoot
+apiVersion: core.gardener.cloud/v1beta1
+metadata:
+  namespace: garden-e2e
+  name: regio-a
+spec:
+  provider:
+    type: openstack
+    infrastructureConfig:
+      apiVersion: openstack.provider.extensions.gardener.cloud/v1alpha1
+      kind: InfrastructureConfig
+      networks:
+        workers: 10.250.0.0/16
+      floatingPoolName: public
+    controlPlaneConfig:
+      apiVersion: openstack.provider.extensions.gardener.cloud/v1alpha1
+      kind: ControlPlaneConfig
+      loadBalancerProvider: amphora
+    workers:
+      - cri:
+          name: containerd
+        machine:
+          type: SCS-4V-8
+          image:
+            name: gardenlinux
+            version: 934.8.0
+          architecture: amd64
+        volume:
+          size: 10Gi
+        zones:
+          - nova
+        name: worker-regio-a
+        minimum: 2
+        maximum: 5
+        maxSurge: 1
+  networking:
+    nodes: 10.250.0.0/16
+    type: calico
+  cloudProfileName: regiocloud
+  secretBindingName: e2e
+  region: RegionA
+  purpose: production
+  kubernetes:
+    version: 1.26.7
+    enableStaticTokenKubeconfig: true
+  addons:
+    kubernetesDashboard:
+      enabled: false
+    nginxIngress:
+      enabled: false
+  maintenance:
+    timeWindow:
+      begin: 030000+0200
+      end: 040000+0200
+    autoUpdate:
+      kubernetesVersion: true
+      machineImageVersion: true
+  hibernation:
+    schedules: []
+
