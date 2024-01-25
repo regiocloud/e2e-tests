@@ -16,5 +16,6 @@
           source configuration.sh
 
           $KUBECTL get shoots
+          $KUBECTL apply -f regio-a/deployment.yaml
 
       changed_when: false
