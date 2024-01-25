@@ -15,6 +15,6 @@
           source binaries.sh
           source configuration.sh
 
+          $KUBECTL annotate confirmation.gardener.cloud/deletion=true -f regio-a
           $KUBECTL delete -f regio-a/deployment.yaml
-
       changed_when: false
