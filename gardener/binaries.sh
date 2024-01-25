@@ -1,3 +1,3 @@
 KUBECTL=kubectl
 GARDENCTL=gardenctl
-SONOBUOY=sonobuyo
+SONOBUOY=sonobuoy
