@@ -3,7 +3,7 @@ kind: Shoot
 apiVersion: core.gardener.cloud/v1beta1
 metadata:
   namespace: garden-cruv4yqhsc
-  name: rcmg2jn5z7
+  name: regio-a
 spec:
   provider:
     type: openstack

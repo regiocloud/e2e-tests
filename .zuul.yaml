@@ -2,7 +2,7 @@
 - secret:
     name: SECRET_E2E_TESTS
     data:
-      KUBECONFIG_GARDEN: !encrypted/pkcs1-oaep
+      KUBECONFIG: !encrypted/pkcs1-oaep
         - MLsY+KfjeRZNXJhAPPuicTEyn50uvrhqp+qj3U4MF+iVYqaWXHLR63oc2KjGkyfKDyPPs
           dA1hghpgFCKEI6Wgor92mhhUbviDF+rwri4RiavHzqxJpmJdvzi+DhrP6GYecxIfaf4jz
           wij7Sv8gqH6NjLGHZ0fgCbFfPpEJM7DWMfRQB5djGnPaGwd/VMO62HaMcletU5O3vFwWV
@@ -73,7 +73,7 @@
     pre-run: playbooks/pre.yml
     run: playbooks/run.yml
     # post-run: playbooks/post.yml
-    cleanup-run: playbooks/cleanup.yml
+    # cleanup-run: playbooks/cleanup.yml
     secrets:
       - name: secret
         secret: SECRET_E2E_TESTS
