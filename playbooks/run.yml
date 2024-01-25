@@ -18,4 +18,13 @@
           $KUBECTL get shoots
           $KUBECTL apply -f regio-a/deployment.yaml
 
+          while [[ $($KUBECTL get shoots regio-a -o json | jq -r '.metadata.labels["shoot.gardener.cloud/status"]') != "healthy" ]]; do
+              echo "$(date) - waiting for shoot"
+              sleep 10
+          done
+
+          while [[ $($KUBECTL get shoots regio-a -o json | jq -r '.status.conditions | .[].status' | xargs -n1 -I {} bash -c "if [[ '{}' != True ]]; then echo False; fi")  =~ False ]]; do
+              echo "$(date) - waiting for shoot"
+              sleep 10
+          done
       changed_when: false
