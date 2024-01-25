@@ -73,7 +73,7 @@
     pre-run: playbooks/pre.yml
     run: playbooks/run.yml
     # post-run: playbooks/post.yml
-    # cleanup-run: playbooks/cleanup.yml
+    cleanup-run: playbooks/cleanup.yml
     secrets:
       - name: secret
         secret: SECRET_E2E_TESTS

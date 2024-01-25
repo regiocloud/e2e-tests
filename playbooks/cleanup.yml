@@ -1,0 +1,20 @@
+---
+- name: Cleanup play
+  hosts: all
+
+  tasks:
+    - name: Run cleanup script
+      ansible.builtin.shell:
+        executable: /bin/bash
+        chdir: "{{ zuul.project.src_dir | default('.') }}/gardener"
+        cmd: |
+          set -e
+          set -o pipefail
+          set -x
+
+          source binaries.sh
+          source configuration.sh
+
+          $KUBECTL delete -f regio-a/deployment.yaml
+
+      changed_when: false
