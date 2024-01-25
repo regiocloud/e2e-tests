@@ -36,6 +36,8 @@
           wget https://github.com/vmware-tanzu/sonobuoy/releases/download/v${SONOBUOY_VERSION}/sonobuoy_${SONOBUOY_VERSION}_linux_amd64.tar.gz
           tar xvzf sonobuoy_${SONOBUOY_VERSION}_linux_amd64.tar.gz sonobuoy
           rm sonobuoy_${SONOBUOY_VERSION}_linux_amd64.tar.gz
+          chmod +x sonobuoy
+          sudo mv sonobuoy /usr/local/bin/sonobuoy
 
           # install gardenlogin
           wget https://github.com/gardener/gardenlogin/releases/download/v${GARDENLOGIN_VERSION}/gardenlogin_linux_amd64
