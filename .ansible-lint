@@ -1,0 +1,12 @@
+---
+exclude_paths:
+  - .github/
+  - .zuul.yaml
+mock_modules: []
+use_default_rules: true
+rulesdir:
+  - ./.ansible-lint-rules/
+skip_list: []
+# DO NOT DELETE THE WARNLIST
+warn_list:
+  - dummy

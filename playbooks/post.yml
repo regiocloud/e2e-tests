@@ -1,7 +1,0 @@
----
-- name: Pre real world play
-  hosts: all
-
-  tasks:
-    - debug:
-        msg: Hello Zuul
