@@ -41,6 +41,7 @@
           wget https://github.com/gardener/gardenlogin/releases/download/v${GARDENLOGIN_VERSION}/gardenlogin_linux_amd64
           mv gardenlogin_linux_amd64 gardenlogin
           chmod + gardenlogin
+          ln -s gardenlogin kubectl-gardenlogin
 
           # install gardenctl
           wget https://github.com/gardener/gardenctl-v2/releases/download/v${GARDENCTL_VERSION}/gardenctl_v2_linux_amd64
