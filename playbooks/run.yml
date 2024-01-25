@@ -33,4 +33,8 @@
           $GARDENCTL target --garden e2e --project cruv4yqhsc --shoot regio-a
           eval $($GARDENCTL kubectl-env bash)
           $KUBECTL get nodes
+
+          $SONOBUOY run --mode certified-conformance --wait --wait-output progress
+          results=$($SONOBUOY retrieve)
+          $SONOBUOY results $results
       changed_when: false
