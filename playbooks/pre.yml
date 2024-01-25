@@ -42,7 +42,7 @@
           mv gardenlogin_linux_amd64 gardenlogin
           chmod + gardenlogin
           sudo mv gardenlogin /usr/local/bin/gardenlogin
-          sudo ln -s /usr/local/bin/gardenlogin /usr/local/bin/kubectl-gardenlogin
+          sudo cp /usr/local/bin/gardenlogin /usr/local/bin/kubectl-gardenlogin
 
           # install gardenctl
           wget https://github.com/gardener/gardenctl-v2/releases/download/v${GARDENCTL_VERSION}/gardenctl_v2_linux_amd64
