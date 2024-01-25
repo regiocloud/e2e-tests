@@ -4,9 +4,8 @@
 
   tasks:
     - name: Copy kubeconfig.yaml configuration file
-      no_log: true
       ansible.builtin.copy:
-        content: "{{ secret.KUBECONFIG }}"
+        content: "{{ secret.KUBECONFIG_GARDEN }}"
         dest: "{{ zuul.project.src_dir }}/gardener/kubeconfig.yaml"
         remote_src: true
         mode: '0600'
