@@ -29,6 +29,7 @@
 
           $KUBECTL get shoots
 
+          [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
           $GARDENCTL target --garden e2e --project cruv4yqhsc --shoot regio-a
           eval $($GARDENCTL kubectl-env bash)
           $KUBECTL get nodes
