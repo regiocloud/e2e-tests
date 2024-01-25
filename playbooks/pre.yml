@@ -3,6 +3,13 @@
   hosts: all
 
   tasks:
+    - name: Install required packages
+      become: true
+      ansible.builtin.apt:
+        name:
+          - jq
+        state: present
+
     - name: Copy kubeconfig.yaml configuration file
       ansible.builtin.copy:
         content: "{{ secret.KUBECONFIG }}"
@@ -43,19 +50,8 @@
           curl -LO https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
           chmod +x kubectl
 
-          # install krew
-          wget https://github.com/kubernetes-sigs/krew/releases/download/v${KREW_VERSION}/krew-linux_amd64.tar.gz
-          tar xvzf krew-linux_amd64.tar.gz
-          rm krew-linux_amd64.tar.gz LICENSE
-          mv krew-linux_amd64 krew
-          chmod +x krew
-          krew install krew
-
-          # install oidc-login plugin
-          # kubectl krew install oidc-login
-
           # prepare e2e garden
           [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
-          $GARDENCTL --config gardenctl.yaml config set-garden e2e --kubeconfig kubeconfig.yaml
+          $GARDENCTL config set-garden e2e --kubeconfig kubeconfig.yaml
 
       changed_when: false

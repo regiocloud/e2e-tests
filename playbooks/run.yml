@@ -15,7 +15,6 @@
           source binaries.sh
           source configuration.sh
 
-          $KUBECTL get shoots
           $KUBECTL apply -f regio-a/deployment.yaml
 
           while [[ $($KUBECTL get shoots regio-a -o json | jq -r '.metadata.labels["shoot.gardener.cloud/status"]') != "healthy" ]]; do
@@ -27,4 +26,10 @@
               echo "$(date) - waiting for shoot"
               sleep 10
           done
+
+          $KUBECTL get shoots
+
+          $GARDENCTL target --garden e2e --project cruv4yqhsc --shoot regio-a
+          eval $($GARDENCTL kubectl-env bash)
+          $KUBECTL get nodes
       changed_when: false
