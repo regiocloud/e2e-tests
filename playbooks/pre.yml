@@ -1,7 +1,49 @@
 ---
-- name: Pre real world play
+- name: Pre play
   hosts: all
 
   tasks:
-    - debug:
-        msg: Hello Zuul
+    - name: Copy clouds.yml configuration file
+      no_log: true
+      ansible.builtin.copy:
+        content: "{{ secret.KUBECONFIG }}"
+        dest: "{{ zuul_work_dir }}/gardener/kubeconfig.yaml"
+        remote_src: true
+        mode: '0600'
+        owner: zuul
+        group: zuul
+
+    - name: Run pre script
+      ansible.builtin.shell:
+        executable: /bin/bash
+        chdir: "{{ zuul.project.src_dir | default('.') }}/gardener"
+        cmd: |
+          set -e
+          set -o pipefail
+          set -x
+
+          source versions.sh
+          source binaries.sh
+
+          # install sonobuyo
+          wget https://github.com/vmware-tanzu/sonobuoy/releases/download/v${SONOBUOY_VERSION}/sonobuoy_${SONOBUOY_VERSION}_linux_amd64.tar.gz
+          tar xvzf sonobuoy_${SONOBUOY_VERSION}_linux_amd64.tar.gz sonobuoy
+          rm sonobuoy_${SONOBUOY_VERSION}_linux_amd64.tar.gz
+
+          # install gardenlogin
+          wget https://github.com/gardener/gardenlogin/releases/download/v${GARDENLOGIN_VERSION}/gardenlogin_linux_amd64
+          mv gardenlogin_linux_amd64 gardenlogin
+          chmod + gardenlogin
+
+          # install gardenctl
+          wget https://github.com/gardener/gardenctl-v2/releases/download/v${GARDENCTL_VERSION}/gardenctl_v2_linux_amd64
+          mv /gardenlogin_linux_amd64 gardenctl_v2
+          chmod +x gardenctl_v2
+
+          # install kubectl
+          curl -LO https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+
+          # prepare e2e garden
+          $GARDENCTL --config gardenctl.yaml config set-garden e2e --kubeconfig kubeconfig.yaml
+
+      changed_when: false
