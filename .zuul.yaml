@@ -73,7 +73,7 @@
     abstract: true
     pre-run: playbooks/pre.yml
     run: playbooks/run.yml
-    post-run: playbooks/post.yml
+    cleanup-run: playbooks/cleanup.yml
     timeout: 14400
     secrets:
       - name: secret

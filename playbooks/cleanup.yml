@@ -1,5 +1,5 @@
 ---
-- name: Post play
+- name: Cleanup play
   hosts: all
 
   vars:
@@ -9,7 +9,7 @@
     inner_kubernetes_series: "{{ kubernetes_version | default('1.27') }}"
 
   tasks:
-    - name: Run post script
+    - name: Run cleanup script
       ansible.builtin.shell:
         executable: /bin/bash
         chdir: "{{ zuul.project.src_dir | default('.') }}/gardener"
