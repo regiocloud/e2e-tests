@@ -69,7 +69,8 @@
     max: 1
 
 - job:
-    name: e2e-tests-gardener-1.27
+    name: e2e-tests-gardener
+    abstract: true
     pre-run: playbooks/pre.yml
     run: playbooks/run.yml
     post-run: playbooks/post.yml
@@ -77,10 +78,15 @@
     secrets:
       - name: secret
         secret: SECRET_E2E_TESTS
-    vars:
-      kubernetes_series: "1.27"
     semaphores:
       - name: semaphore-e2e-tests
+
+- job:
+    name: e2e-tests-gardener-1.27-quick
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_series: "1.27"
+      sonobuoy_mode: quick
 
 - project:
     merge-mode: squash-merge
@@ -91,4 +97,4 @@
         - yamllint
     post:
       jobs:
-        - e2e-tests-gardener-1.27
+        - e2e-tests-gardener-1.27-quick

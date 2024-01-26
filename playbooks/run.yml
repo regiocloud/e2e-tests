@@ -7,6 +7,7 @@
     sonobuoy_binary: sonobuoy
 
     inner_cloud_profile: "{{ cloud_profile | default('regio-a') }}"
+    inner_sonobuoy_mode: "{{ sonobuoy_mode | default('certified-conformance') }}"
 
   tasks:
     - name: Run run script
@@ -18,11 +19,14 @@
           set -o pipefail
           set -x
 
+          export KUBECONFIG=kubeconfig.yaml
+
           [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
           {{ gardenctl_binary }} target --garden e2e --project cruv4yqhsc --shoot {{ inner_cloud_profile }}
           eval $({{ gardenctl_binary }} kubectl-env bash)
 
-          {{ sonobuoy_binary }} run --mode certified-conformance --wait --wait-output progress
+          {{ sonobuoy_binary }} delete --wait
+          {{ sonobuoy_binary }} run --mode {{ inner_sonobuoy_mode }} --wait --wait-output progress
           results=$({{ sonobuoy_binary }} retrieve)
           {{ sonobuoy_binary }} results $results
       changed_when: false
