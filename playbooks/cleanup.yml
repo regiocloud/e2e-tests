@@ -2,6 +2,12 @@
 - name: Cleanup play
   hosts: all
 
+  vars:
+    kubectl_binary: kubectl
+
+    inner_cloud_profile: "{{ cloud_profile | default('regio-a') }}"
+    inner_kubernetes_series: "{{ kubernetes_version | default('1.27') }}"
+
   tasks:
     - name: Run cleanup script
       ansible.builtin.shell:
@@ -12,9 +18,8 @@
           set -o pipefail
           set -x
 
-          source binaries.sh
-          source configuration.sh
+          export KUBECONFIG=kubeconfig.yaml
 
-          $KUBECTL annotate confirmation.gardener.cloud/deletion=true -f regio-a
-          $KUBECTL delete -f regio-a/deployment.yaml
+          {{ kubectl_binary }} annotate confirmation.gardener.cloud/deletion=true -f {{ inner_cloud_profile }}
+          {{ kubectl_binary }} delete -f {{ inner_cloud_profile }}/{{ inner_kubernetes_series }}/deployment.yaml
       changed_when: false
