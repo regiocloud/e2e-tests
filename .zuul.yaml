@@ -95,6 +95,18 @@
       kubernetes_version: "1.28.6"
       sonobuoy_mode: quick
 
+- job:
+    name: e2e-tests-gardener-1.27
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_version: "1.27.10"
+
+- job:
+    name: e2e-tests-gardener-1.28
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_version: "1.28.6"
+
 - project:
     merge-mode: squash-merge
     default-branch: main
@@ -106,3 +118,11 @@
       jobs:
         - e2e-tests-gardener-1.27-quick
         - e2e-tests-gardener-1.28-quick
+    periodic-hourly:
+      jobs:
+        - e2e-tests-gardener-1.27-quick
+        - e2e-tests-gardener-1.28-quick
+    periodic-daily:
+      jobs:
+        - e2e-tests-gardener-1.27
+        - e2e-tests-gardener-1.28
