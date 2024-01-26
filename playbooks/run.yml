@@ -3,6 +3,7 @@
   hosts: all
 
   vars:
+    gardenctl_binary: gardenctl
     sonobuoy_binary: sonobuoy
 
   tasks:
@@ -15,7 +16,8 @@
           set -o pipefail
           set -x
 
-          export KUBECONFIG=kubeconfig.yaml
+          [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
+          eval $({{ gardenctl_binary }} kubectl-env bash)
 
           {{ sonobuoy_binary }} run --mode certified-conformance --wait --wait-output progress
           results=$({{ sonobuoy_binary }} retrieve)
