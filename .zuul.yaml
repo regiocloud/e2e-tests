@@ -72,8 +72,7 @@
     name: e2e-tests-gardener-1.27
     pre-run: playbooks/pre.yml
     run: playbooks/run.yml
-    # post-run: playbooks/post.yml
-    cleanup-run: playbooks/cleanup.yml
+    post-run: playbooks/post.yml
     timeout: 14400
     secrets:
       - name: secret
