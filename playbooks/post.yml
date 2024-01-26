@@ -20,6 +20,6 @@
 
           export KUBECONFIG=kubeconfig.yaml
 
-          {{ kubectl_binary }} annotate confirmation.gardener.cloud/deletion=true -f {{ inner_cloud_profile }}{{ inner_kubernetes_series }}/deployment.yaml
+          {{ kubectl_binary }} annotate confirmation.gardener.cloud/deletion=true -f {{ inner_cloud_profile }}/{{ inner_kubernetes_series }}/deployment.yaml
           {{ kubectl_binary }} delete -f {{ inner_cloud_profile }}/{{ inner_kubernetes_series }}/deployment.yaml
       changed_when: false
