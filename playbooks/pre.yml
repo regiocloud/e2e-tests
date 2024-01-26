@@ -12,6 +12,9 @@
     kubectl_binary: kubectl
     sonobuoy_binary: sonobuoy
 
+    inner_cloud_profile: "{{ cloud_profile | default('regio-a') }}"
+    inner_kubernetes_series: "{{ kubernetes_version | default('1.27') }}"
+
   tasks:
     - name: Install required packages
       become: true
