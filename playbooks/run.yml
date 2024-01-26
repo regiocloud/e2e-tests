@@ -3,8 +3,6 @@
   hosts: all
 
   vars:
-    gardenctl_binary: gardenctl
-    kubectl_binary: kubectl
     sonobuoy_binary: sonobuoy
 
     inner_cloud_profile: "{{ cloud_profile | default('regio-a') }}"
@@ -21,27 +19,6 @@
           set -x
 
           export KUBECONFIG=kubeconfig.yaml
-
-          {{ kubectl_binary }} apply -f {{ inner_cloud_profile }}/{{ inner_kubernetes_series }}/deployment.yaml
-
-          while [[ $({{ kubectl_binary }} get shoots {{ inner_cloud_profile }} -o json | jq -r '.metadata.labels["shoot.gardener.cloud/status"]') != "healthy" ]]; do
-              echo "$(date) - waiting for shoot - phase 1"
-              sleep 10
-          done
-
-          sleep 10
-
-          while [[ $({{ kubectl_binary }} get shoots {{ inner_cloud_profile }} -o json | jq -r '.status.conditions | .[].status' | xargs -I {} bash -c "if [[ '{}' != True ]]; then echo False; fi")  =~ False ]]; do
-              echo "$(date) - waiting for shoot - phase 2"
-              sleep 10
-          done
-
-          {{ kubectl_binary }} get shoots
-
-          [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
-          {{ gardenctl_binary }} target --garden e2e --project cruv4yqhsc --shoot {{ inner_cloud_profile }}
-          eval $({{ gardenctl_binary }} kubectl-env bash)
-          {{ kubectl_binary }} get nodes
 
           {{ sonobuoy_binary }} run --mode certified-conformance --wait --wait-output progress
           results=$({{ sonobuoy_binary }} retrieve)
