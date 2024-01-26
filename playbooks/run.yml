@@ -6,6 +6,8 @@
     gardenctl_binary: gardenctl
     sonobuoy_binary: sonobuoy
 
+    inner_cloud_profile: "{{ cloud_profile | default('regio-a') }}"
+
   tasks:
     - name: Run run script
       ansible.builtin.shell:
@@ -17,6 +19,7 @@
           set -x
 
           [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
+          {{ gardenctl_binary }} target --garden e2e --project cruv4yqhsc --shoot {{ inner_cloud_profile }}
           eval $({{ gardenctl_binary }} kubectl-env bash)
 
           {{ sonobuoy_binary }} run --mode certified-conformance --wait --wait-output progress
