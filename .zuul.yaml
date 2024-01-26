@@ -69,15 +69,19 @@
     max: 1
 
 - job:
-    name: e2e-tests-gardener
+    name: e2e-tests-gardener-1.27
     pre-run: playbooks/pre.yml
     run: playbooks/run.yml
     # post-run: playbooks/post.yml
     cleanup-run: playbooks/cleanup.yml
-    timeout: 7200
+    timeout: 14400
     secrets:
       - name: secret
         secret: SECRET_E2E_TESTS
+    vars:
+      kubernetes_series: "1.27"
+    semaphores:
+      - name: semaphore-e2e-tests
 
 - project:
     merge-mode: squash-merge
@@ -88,4 +92,4 @@
         - yamllint
     post:
       jobs:
-        - e2e-tests-gardener
+        - e2e-tests-gardener-1.27

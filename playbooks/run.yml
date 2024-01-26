@@ -2,6 +2,14 @@
 - name: Run play
   hosts: all
 
+  vars:
+    gardenctl_binary: gardenctl
+    kubectl_binary: kubectl
+    sonobuoy_binary: sonobuoy
+
+    inner_cloud_profile: "{{ cloud_profile | default('regio-a') }}"
+    inner_kubernetes_series: "{{ kubernetes_version | default('1.27') }}"
+
   tasks:
     - name: Run run script
       ansible.builtin.shell:
@@ -12,31 +20,30 @@
           set -o pipefail
           set -x
 
-          source binaries.sh
-          source configuration.sh
+          export KUBECONFIG=kubeconfig.yaml
 
-          $KUBECTL apply -f regio-a/deployment.yaml
+          {{ kubectl_binary }} apply -f {{ inner_cloud_profile }}/{{ inner_kubernetes_series }}/deployment.yaml
 
-          while [[ $($KUBECTL get shoots regio-a -o json | jq -r '.metadata.labels["shoot.gardener.cloud/status"]') != "healthy" ]]; do
+          while [[ $({{ kubectl_binary }} get shoots {{ inner_cloud_profile }} -o json | jq -r '.metadata.labels["shoot.gardener.cloud/status"]') != "healthy" ]]; do
               echo "$(date) - waiting for shoot - phase 1"
               sleep 10
           done
 
           sleep 10
 
-          while [[ $($KUBECTL get shoots regio-a -o json | jq -r '.status.conditions | .[].status' | xargs -I {} bash -c "if [[ '{}' != True ]]; then echo False; fi")  =~ False ]]; do
+          while [[ $({{ kubectl_binary }} get shoots {{ inner_cloud_profile }} -o json | jq -r '.status.conditions | .[].status' | xargs -I {} bash -c "if [[ '{}' != True ]]; then echo False; fi")  =~ False ]]; do
               echo "$(date) - waiting for shoot - phase 2"
               sleep 10
           done
 
-          $KUBECTL get shoots
+          {{ kubectl_binary }} get shoots
 
           [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
-          $GARDENCTL target --garden e2e --project cruv4yqhsc --shoot regio-a
-          eval $($GARDENCTL kubectl-env bash)
-          $KUBECTL get nodes
+          {{ gardenctl_binary }} target --garden e2e --project cruv4yqhsc --shoot {{ inner_cloud_profile }}
+          eval $({{ gardenctl_binary }} kubectl-env bash)
+          {{ kubectl_binary }} get nodes
 
-          $SONOBUOY run --mode certified-conformance --wait --wait-output progress
-          results=$($SONOBUOY retrieve)
-          $SONOBUOY results $results
+          {{ sonobuoy_binary }} run --mode certified-conformance --wait --wait-output progress
+          results=$({{ sonobuoy_binary }} retrieve)
+          {{ sonobuoy_binary }} results $results
       changed_when: false
