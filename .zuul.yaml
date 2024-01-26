@@ -88,6 +88,12 @@
       kubernetes_series: "1.27"
       sonobuoy_mode: quick
 
+- job:
+    name: e2e-tests-gardener-1.28-quick
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_series: "1.28"
+
 - project:
     merge-mode: squash-merge
     default-branch: main
@@ -98,3 +104,4 @@
     post:
       jobs:
         - e2e-tests-gardener-1.27-quick
+        - e2e-tests-gardener-1.28-quick
