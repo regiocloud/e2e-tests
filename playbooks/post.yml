@@ -1,12 +1,12 @@
 ---
-- name: Cleanup play
+- name: Post play
   hosts: all
 
   vars:
     kubectl_binary: kubectl
 
   tasks:
-    - name: Run cleanup script
+    - name: Run post script
       ansible.builtin.shell:
         executable: /bin/bash
         chdir: "{{ zuul.project.src_dir | default('.') }}/gardener"
