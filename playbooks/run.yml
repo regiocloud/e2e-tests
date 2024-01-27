@@ -6,7 +6,7 @@
     gardenctl_binary: gardenctl
     sonobuoy_binary: sonobuoy
 
-    inner_cloud_profile: "{{ cloud_profile | default('regio-a') }}"
+    inner_name: "{{ zuul.build[:8] }}"
     inner_project_name: "{{ project_name | default('cruv4yqhsc') }}"
     inner_sonobuoy_mode: "{{ sonobuoy_mode | default('certified-conformance') }}"
 
@@ -23,7 +23,7 @@
           export KUBECONFIG=kubeconfig.yaml
 
           [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
-          {{ gardenctl_binary }} target --garden e2e --project {{ inner_project_name }} --shoot {{ inner_cloud_profile }}
+          {{ gardenctl_binary }} target --garden e2e --project {{ inner_project_name }} --shoot {{ inner_name }}
           eval $({{ gardenctl_binary }} kubectl-env bash)
 
           {{ sonobuoy_binary }} delete --wait
