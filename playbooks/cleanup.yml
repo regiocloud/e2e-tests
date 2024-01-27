@@ -5,9 +5,6 @@
   vars:
     kubectl_binary: kubectl
 
-    inner_cloud_profile: "{{ cloud_profile | default('regio-a') }}"
-    inner_kubernetes_series: "{{ kubernetes_version | default('1.27') }}"
-
   tasks:
     - name: Run cleanup script
       ansible.builtin.shell:
@@ -20,6 +17,6 @@
 
           export KUBECONFIG=kubeconfig.yaml
 
-          {{ kubectl_binary }} annotate confirmation.gardener.cloud/deletion=true -f {{ inner_cloud_profile }}/{{ inner_kubernetes_series }}/deployment.yaml
-          {{ kubectl_binary }} delete -f {{ inner_cloud_profile }}/{{ inner_kubernetes_series }}/deployment.yaml
+          {{ kubectl_binary }} annotate confirmation.gardener.cloud/deletion=true -f deployment.yaml
+          {{ kubectl_binary }} delete -f deployment.yaml
       changed_when: false

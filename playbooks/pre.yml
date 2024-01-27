@@ -13,7 +13,8 @@
     sonobuoy_binary: sonobuoy
 
     inner_cloud_profile: "{{ cloud_profile | default('regio-a') }}"
-    inner_kubernetes_series: "{{ kubernetes_version | default('1.27') }}"
+    inner_kubernetes_version: "{{ kubernetes_version | default('1.27.10') }}"
+    inner_project_name: "{{ project_name | default('cruv4yqhsc') }}"
 
   tasks:
     - name: Install required packages
@@ -73,6 +74,14 @@
 
       changed_when: false
 
+    - name: Prepare deployment.yaml
+      ansible.builtin.template:
+        src: "{{ zuul.project.src_dir }}/gardener/{{ inner_cloud_profile }}/deployment.yaml.j2"
+        dest: "{{ zuul.project.src_dir }}/gardener/deployment.yaml"
+        mode: 0644
+        owner: zuul
+        group: zuul
+
     - name: Run create script
       ansible.builtin.shell:
         executable: /bin/bash
@@ -84,7 +93,7 @@
 
           export KUBECONFIG=kubeconfig.yaml
 
-          {{ kubectl_binary }} apply -f {{ inner_cloud_profile }}/{{ inner_kubernetes_series }}/deployment.yaml
+          {{ kubectl_binary }} apply -f deployment.yaml
 
           while [[ $({{ kubectl_binary }} get shoots {{ inner_cloud_profile }} -o json | jq -r '.metadata.labels["shoot.gardener.cloud/status"]') != "healthy" ]]; do
               echo "$(date) - waiting for shoot - phase 1"
@@ -101,7 +110,7 @@
           {{ kubectl_binary }} get shoots
 
           [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
-          {{ gardenctl_binary }} target --garden e2e --project cruv4yqhsc --shoot {{ inner_cloud_profile }}
+          {{ gardenctl_binary }} target --garden e2e --project {{ inner_project_name }} --shoot {{ inner_cloud_profile }}
           eval $({{ gardenctl_binary }} kubectl-env bash)
           {{ kubectl_binary }} get nodes
 

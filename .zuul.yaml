@@ -85,14 +85,15 @@
     name: e2e-tests-gardener-1.27-quick
     parent: e2e-tests-gardener
     vars:
-      kubernetes_series: "1.27"
+      kubernetes_version: "1.27.10"
       sonobuoy_mode: quick
 
 - job:
     name: e2e-tests-gardener-1.28-quick
     parent: e2e-tests-gardener
     vars:
-      kubernetes_series: "1.28"
+      kubernetes_version: "1.28.6"
+      sonobuoy_mode: quick
 
 - project:
     merge-mode: squash-merge
