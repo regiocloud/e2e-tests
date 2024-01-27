@@ -76,8 +76,7 @@
 
     - name: Prepare deployment.yaml
       ansible.builtin.template:
-        # use absolute path here
-        src: "{{ ansible_user_dir }}/src/github.com/regiocloud/e2e-tests/gardener/{{ inner_cloud_profile }}/deployment.yaml.j2"
+        src: "gardener/{{ inner_cloud_profile }}/deployment.yaml.j2"
         dest: "{{ zuul.project.src_dir }}/gardener/deployment.yaml"
         mode: 0644
         owner: zuul
