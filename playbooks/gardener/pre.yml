@@ -26,7 +26,7 @@
         update_cache: true
         state: present
 
-    - name: Copy kubeconfig.yaml configuration file
+    - name: Copy kubeconfig.yaml file
       ansible.builtin.copy:
         content: "{{ secret.KUBECONFIG }}"
         dest: "{{ zuul.project.src_dir }}/gardener/kubeconfig.yaml"
