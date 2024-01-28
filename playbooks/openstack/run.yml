@@ -1,0 +1,12 @@
+---
+- name: Run play
+  hosts: all
+
+  vars:
+    inner_name: "{{ zuul.build[:8] }}"
+
+  roles:
+    - role: tox
+      vars:
+        tox_extra_args: "-- --parallel 2 --number 2 --prefix {{ inner_name }}"
+        zuul_work_dir: "{{ ansible_user_dir }}/openstack-simple-stress"

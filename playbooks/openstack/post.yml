@@ -1,0 +1,5 @@
+---
+- name: Post play
+  hosts: all
+
+  tasks: []

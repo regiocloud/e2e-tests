@@ -2,6 +2,17 @@
 - secret:
     name: SECRET_E2E_TESTS
     data:
+      OSCONFIG: !encrypted/pkcs1-oaep
+        - EsD566aCjvM0ENXbGwX0InxvZP2zLrnB0Rq69TDEHXyZ7bU/uXWYEjN99IDagAk2FzSoV
+          0JLdzQ+qIYszoe8O47UGngMWT23SzEKMpSW0Mc7OZuC8R8nrHTNmEuTqyJKxYwIKoCsKy
+          9p8QTe8yoEcXTYreI/3nYz2cOc/reczQLEMmUnsXSahJtDg67G34MeNMxHJz++keDzVdl
+          dNt+iYF+DwigkurJoO1aGcz2tCklfBs+KUUJUk294Ra3pqp+JtTFdh9QGwlolf/X0uDJo
+          z08hVgNprLPtZJk37Zg9lhYv2yYtoR5QzewRioKJA/aUurz9VpweodwbPe6D+d6HCynEA
+          MwMz2faC7hEa6ZLc0PKZBFTZLGFSDIFIg0O7KGSkr2rHz+i6LB93qUt9OfMfhcFH0/T/Q
+          8BE1AlY+ZPI9rz8LnOH+ZbaMYT8p5RrPCXzNIlbCvJmnOR2cUDIVMjxu5f+yGjw6I5dPV
+          Hp0ved5Ge938LqVJuijMT1Bhp2Iaxxn72MTuF3zKrnuujkrT4O8vDVdl+cD5HQdu7gVT4
+          F3bEXc7ZmeT/QAC9x3nq1nXGeBxd1wJBcJJkUMFVx8rQQgAtU2Re+umjc5J9QtW1/VhIR
+          NYtuZooy2RcyMqIkuitTWxA1i+P95P4XpC2jtFobnHoLAOFtEgKI3AWebxoFIQ=
       KUBECONFIG: !encrypted/pkcs1-oaep
         - MLsY+KfjeRZNXJhAPPuicTEyn50uvrhqp+qj3U4MF+iVYqaWXHLR63oc2KjGkyfKDyPPs
           dA1hghpgFCKEI6Wgor92mhhUbviDF+rwri4RiavHzqxJpmJdvzi+DhrP6GYecxIfaf4jz
@@ -65,8 +76,12 @@
           bOLH9wE/ncaEV/UYVU3CwYDy3oWHhTAuQzP+c3ai9qgTEXwA8006AEzHFb8qNA=
 
 - semaphore:
-    name: semaphore-e2e-tests
+    name: semaphore-e2e-tests-gardener
     max: 4
+
+- semaphore:
+    name: semaphore-e2e-tests-openstack
+    max: 1
 
 - job:
     name: e2e-tests-gardener
@@ -79,7 +94,18 @@
       - name: secret
         secret: SECRET_E2E_TESTS
     semaphores:
-      - name: semaphore-e2e-tests
+      - name: semaphore-e2e-tests-gardener
+
+- job:
+    name: e2e-tests-openstack
+    pre-run: playbooks/openstack/pre.yml
+    run: playbooks/openstack/run.yml
+    post-run: playbooks/openstack/post.yml
+    # secrets:
+    #   - name: secret
+    #     secret: SECRET_E2E_TESTS
+    semaphores:
+      - name: semaphore-e2e-tests-openstack
 
 - job:
     name: e2e-tests-gardener-1.27-quick
@@ -118,10 +144,12 @@
       jobs:
         - e2e-tests-gardener-1.27-quick
         - e2e-tests-gardener-1.28-quick
+        - e2e-tests-openstack
     periodic-hourly:
       jobs:
         - e2e-tests-gardener-1.27-quick
         - e2e-tests-gardener-1.28-quick
+        - e2e-tests-openstack
     periodic-daily:
       jobs:
         - e2e-tests-gardener-1.27

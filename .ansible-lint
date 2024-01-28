@@ -3,10 +3,15 @@ exclude_paths:
   - .github/
   - .zuul.yaml
 mock_modules: []
+mock_roles:
+  - ensure-tox
+  - tox
 use_default_rules: true
 rulesdir:
   - ./.ansible-lint-rules/
-skip_list: []
+skip_list:
+  - latest[git]
+  - var-naming[no-role-prefix]
 # DO NOT DELETE THE WARNLIST
 warn_list:
   - dummy

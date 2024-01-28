@@ -1,0 +1,32 @@
+---
+- name: Pre play
+  hosts: all
+
+  vars:
+    inner_name: "{{ zuul.build[:8] }}"
+
+  roles:
+    - role: ensure-tox
+
+  tasks:
+    - name: Install required packages
+      become: true
+      ansible.builtin.apt:
+        name:
+          - git
+        update_cache: true
+        state: present
+
+    - name: Get openstack-simple-stress repository
+      ansible.builtin.git:
+        repo: https://github.com/osism/openstack-simple-stress.git
+        dest: "{{ ansible_user_dir }}/openstack-simple-stress"
+
+    - name: Copy clouds.yaml file
+      ansible.builtin.copy:
+        content: "{{ secret.OSCONFIG }}"
+        dest: "{{ ansible_user_dir }}/openstack-simple-stress/clouds.yaml"
+        remote_src: true
+        mode: '0600'
+        owner: zuul
+        group: zuul
