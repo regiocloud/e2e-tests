@@ -101,9 +101,9 @@
     pre-run: playbooks/openstack/pre.yml
     run: playbooks/openstack/run.yml
     post-run: playbooks/openstack/post.yml
-    # secrets:
-    #   - name: secret
-    #     secret: SECRET_E2E_TESTS
+    secrets:
+      - name: secret
+        secret: SECRET_E2E_TESTS
     semaphores:
       - name: semaphore-e2e-tests-openstack
 
