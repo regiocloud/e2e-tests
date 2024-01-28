@@ -71,9 +71,9 @@
 - job:
     name: e2e-tests-gardener
     abstract: true
-    pre-run: playbooks/pre.yml
-    run: playbooks/run.yml
-    post-run: playbooks/post.yml
+    pre-run: playbooks/gardener/pre.yml
+    run: playbooks/gardener/run.yml
+    post-run: playbooks/gardener/post.yml
     timeout: 14400
     secrets:
       - name: secret
