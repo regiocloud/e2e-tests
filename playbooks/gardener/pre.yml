@@ -77,7 +77,7 @@
 
     - name: Prepare deployment.yaml
       ansible.builtin.template:
-        src: "gardener/{{ inner_cloud_profile }}/deployment.yaml.j2"
+        src: "{{ inner_cloud_profile }}/deployment.yaml.j2"
         dest: "{{ zuul.project.src_dir }}/gardener/deployment.yaml"
         mode: 0644
         owner: zuul
