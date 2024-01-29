@@ -9,7 +9,7 @@
     - name: Run post script
       ansible.builtin.shell:
         executable: /bin/bash
-        chdir: "{{ zuul.project.src_dir | default('.') }}/gardener"
+        chdir: "{{ zuul.project.src_dir | default('.') }}"
         cmd: |
           set -e
           set -o pipefail
