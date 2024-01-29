@@ -29,7 +29,7 @@
     - name: Copy kubeconfig.yaml file
       ansible.builtin.copy:
         content: "{{ secret.KUBECONFIG }}"
-        dest: "{{ zuul.project.src_dir }}/gardener/kubeconfig.yaml"
+        dest: "{{ zuul.project.src_dir }}/kubeconfig.yaml"
         remote_src: true
         mode: '0600'
         owner: zuul
@@ -38,7 +38,7 @@
     - name: Run install script
       ansible.builtin.shell:
         executable: /bin/bash
-        chdir: "{{ zuul.project.src_dir | default('.') }}/gardener"
+        chdir: "{{ zuul.project.src_dir | default('.') }}"
         cmd: |
           set -e
           set -o pipefail
@@ -78,7 +78,7 @@
     - name: Prepare deployment.yaml
       ansible.builtin.template:
         src: "{{ inner_cloud_profile }}/deployment.yaml.j2"
-        dest: "{{ zuul.project.src_dir }}/gardener/deployment.yaml"
+        dest: "{{ zuul.project.src_dir }}/deployment.yaml"
         mode: 0644
         owner: zuul
         group: zuul
@@ -86,7 +86,7 @@
     - name: Run create script
       ansible.builtin.shell:
         executable: /bin/bash
-        chdir: "{{ zuul.project.src_dir | default('.') }}/gardener"
+        chdir: "{{ zuul.project.src_dir | default('.') }}"
         cmd: |
           set -e
           set -o pipefail
