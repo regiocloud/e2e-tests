@@ -37,7 +37,7 @@ spec:
         maxSurge: 1
   networking:
     nodes: 10.250.0.0/16
-    type: calico
+    type: {{ inner_networking_type }}
   cloudProfileName: regiocloud
   secretBindingName: {{ inner_project_name }}
   region: RegionA
