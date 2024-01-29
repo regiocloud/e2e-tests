@@ -15,6 +15,7 @@
     inner_cloud_profile: "{{ cloud_profile | default('regio-a') }}"
     inner_kubernetes_version: "{{ kubernetes_version | default('1.27.10') }}"
     inner_name: "{{ zuul.build[:8] }}"
+    inner_networking_type: "{{ networking_type | default('calico') }}"
     inner_project_name: "{{ project_name | default('cruv4yqhsc') }}"
 
   tasks:

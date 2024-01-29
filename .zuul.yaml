@@ -122,16 +122,32 @@
       sonobuoy_mode: quick
 
 - job:
-    name: e2e-tests-gardener-1.27
+    name: e2e-tests-gardener-1.27-calico
     parent: e2e-tests-gardener
     vars:
       kubernetes_version: "1.27.10"
+      networking_type: calico
 
 - job:
-    name: e2e-tests-gardener-1.28
+    name: e2e-tests-gardener-1.28-calico
     parent: e2e-tests-gardener
     vars:
       kubernetes_version: "1.28.6"
+      networking_type: calico
+
+- job:
+    name: e2e-tests-gardener-1.27-cilium
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_version: "1.27.10"
+      networking_type: cilium
+
+- job:
+    name: e2e-tests-gardener-1.28-cilium
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_version: "1.28.6"
+      networking_type: cilium
 
 - project:
     merge-mode: squash-merge
@@ -152,5 +168,7 @@
         - e2e-tests-openstack
     periodic-daily:
       jobs:
-        - e2e-tests-gardener-1.27
-        - e2e-tests-gardener-1.28
+        - e2e-tests-gardener-1.27-calico
+        - e2e-tests-gardener-1.28-calico
+        - e2e-tests-gardener-1.27-cilium
+        - e2e-tests-gardener-1.28-cilium
