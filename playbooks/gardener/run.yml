@@ -28,6 +28,25 @@
 
           {{ sonobuoy_binary }} delete --wait
           {{ sonobuoy_binary }} run --mode {{ inner_sonobuoy_mode }} --wait --wait-output progress
+      changed_when: false
+
+    - name: Run retrieve results script
+      ansible.builtin.shell:
+        executable: /bin/bash
+        chdir: "{{ zuul.project.src_dir | default('.') }}"
+        cmd: |
+          set -e
+          set -o pipefail
+          set -x
+
+          export KUBECONFIG=kubeconfig.yaml
+
+          [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
+          {{ gardenctl_binary }} target --garden e2e --project {{ inner_project_name }} --shoot {{ inner_name }}
+          eval $({{ gardenctl_binary }} kubectl-env bash)
+
           results=$({{ sonobuoy_binary }} retrieve)
           {{ sonobuoy_binary }} results $results
+      retries: 3
+      delay: 60
       changed_when: false
