@@ -111,42 +111,63 @@
     name: e2e-tests-gardener-1.27-quick
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.27.10"
+      kubernetes_version: "1.27.11"
       sonobuoy_mode: quick
 
 - job:
     name: e2e-tests-gardener-1.28-quick
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.28.6"
+      kubernetes_version: "1.28.7"
+      sonobuoy_mode: quick
+
+- job:
+    name: e2e-tests-gardener-1.29-quick
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_version: "1.29.2"
       sonobuoy_mode: quick
 
 - job:
     name: e2e-tests-gardener-1.27-calico
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.27.10"
+      kubernetes_version: "1.27.11"
       networking_type: calico
 
 - job:
     name: e2e-tests-gardener-1.28-calico
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.28.6"
+      kubernetes_version: "1.28.7"
+      networking_type: calico
+
+- job:
+    name: e2e-tests-gardener-1.29-calico
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_version: "1.29.2"
       networking_type: calico
 
 - job:
     name: e2e-tests-gardener-1.27-cilium
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.27.10"
+      kubernetes_version: "1.27.11"
       networking_type: cilium
 
 - job:
     name: e2e-tests-gardener-1.28-cilium
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.28.6"
+      kubernetes_version: "1.28.7"
+      networking_type: cilium
+
+- job:
+    name: e2e-tests-gardener-1.29-cilium
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_version: "1.29.2"
       networking_type: cilium
 
 - project:
@@ -160,15 +181,19 @@
       jobs:
         - e2e-tests-gardener-1.27-quick
         - e2e-tests-gardener-1.28-quick
+        - e2e-tests-gardener-1.29-quick
         - e2e-tests-openstack
     periodic-hourly:
       jobs:
         - e2e-tests-gardener-1.27-quick
         - e2e-tests-gardener-1.28-quick
+        - e2e-tests-gardener-1.29-quick
         - e2e-tests-openstack
     periodic-daily:
       jobs:
         - e2e-tests-gardener-1.27-calico
         - e2e-tests-gardener-1.28-calico
+        - e2e-tests-gardener-1.29-calico
         - e2e-tests-gardener-1.27-cilium
         - e2e-tests-gardener-1.28-cilium
+        - e2e-tests-gardener-1.29-cilium
