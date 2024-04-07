@@ -111,63 +111,63 @@
     name: e2e-tests-gardener-1.27-quick
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.27.11"
+      kubernetes_version: "1.27.12"
       sonobuoy_mode: quick
 
 - job:
     name: e2e-tests-gardener-1.28-quick
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.28.7"
+      kubernetes_version: "1.28.8"
       sonobuoy_mode: quick
 
 - job:
     name: e2e-tests-gardener-1.29-quick
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.29.2"
+      kubernetes_version: "1.29.3"
       sonobuoy_mode: quick
 
 - job:
     name: e2e-tests-gardener-1.27-calico
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.27.11"
+      kubernetes_version: "1.27.12"
       networking_type: calico
 
 - job:
     name: e2e-tests-gardener-1.28-calico
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.28.7"
+      kubernetes_version: "1.28.8"
       networking_type: calico
 
 - job:
     name: e2e-tests-gardener-1.29-calico
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.29.2"
+      kubernetes_version: "1.29.3"
       networking_type: calico
 
 - job:
     name: e2e-tests-gardener-1.27-cilium
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.27.11"
+      kubernetes_version: "1.27.12"
       networking_type: cilium
 
 - job:
     name: e2e-tests-gardener-1.28-cilium
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.28.7"
+      kubernetes_version: "1.28.8"
       networking_type: cilium
 
 - job:
     name: e2e-tests-gardener-1.29-cilium
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.29.2"
+      kubernetes_version: "1.29.3"
       networking_type: cilium
 
 - project:
