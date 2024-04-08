@@ -43,7 +43,7 @@ spec:
   region: RegionA
   purpose: production
   kubernetes:
-    version: {{ inner_kubernetes_version }}
+    version: "{{ inner_kubernetes_version }}"
     enableStaticTokenKubeconfig: false
   addons:
     kubernetesDashboard:
