@@ -160,7 +160,7 @@
     name: e2e-tests-gardener-1.28-cilium
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.28.8"
+      kubernetes_version: "1.28"
       networking_type: cilium
 
 - job:
