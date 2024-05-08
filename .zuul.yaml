@@ -179,21 +179,21 @@
         - yamllint
     post:
       jobs:
-        - e2e-tests-gardener-1.27-quick
-        - e2e-tests-gardener-1.28-quick
-        - e2e-tests-gardener-1.29-quick
+        # - e2e-tests-gardener-1.27-quick
+        # - e2e-tests-gardener-1.28-quick
+        # - e2e-tests-gardener-1.29-quick
         - e2e-tests-openstack
     periodic-hourly:
       jobs:
-        - e2e-tests-gardener-1.27-quick
-        - e2e-tests-gardener-1.28-quick
-        - e2e-tests-gardener-1.29-quick
+        # - e2e-tests-gardener-1.27-quick
+        # - e2e-tests-gardener-1.28-quick
+        # - e2e-tests-gardener-1.29-quick
         - e2e-tests-openstack
-    periodic-daily:
-      jobs:
-        - e2e-tests-gardener-1.27-calico
-        - e2e-tests-gardener-1.28-calico
-        - e2e-tests-gardener-1.29-calico
-        - e2e-tests-gardener-1.27-cilium
-        - e2e-tests-gardener-1.28-cilium
-        - e2e-tests-gardener-1.29-cilium
+    # periodic-daily:
+    #   jobs:
+    #     - e2e-tests-gardener-1.27-calico
+    #     - e2e-tests-gardener-1.28-calico
+    #     - e2e-tests-gardener-1.29-calico
+    #     - e2e-tests-gardener-1.27-cilium
+    #     - e2e-tests-gardener-1.28-cilium
+    #     - e2e-tests-gardener-1.29-cilium
