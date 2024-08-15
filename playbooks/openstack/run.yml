@@ -8,5 +8,5 @@
   roles:
     - role: tox
       vars:
-        tox_extra_args: "-- --parallel 10 --number 10 --prefix {{ inner_name }} --volume --no-delete"
+        tox_extra_args: "-- --parallel 10 --number 20 --prefix {{ inner_name }} --volume --no-delete"
         zuul_work_dir: "{{ ansible_user_dir }}/openstack-simple-stress"
