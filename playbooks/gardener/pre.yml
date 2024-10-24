@@ -13,6 +13,7 @@
     sonobuoy_binary: sonobuoy
 
     inner_cloud_profile: "{{ cloud_profile | default('regio-a') }}"
+    inner_gardelinux_version: "{{ gardenlinux_version | default('1592.2') }}"
     inner_kubernetes_version: "{{ kubernetes_version | default('1.27.10') }}"
     inner_name: "{{ zuul.build[:8] }}"
     inner_networking_type: "{{ networking_type | default('calico') }}"
