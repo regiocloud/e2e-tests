@@ -149,6 +149,27 @@
       kubernetes_version: "1.30"
       networking_type: cilium
 
+- job:
+    name: e2e-tests-gardener-1.31-quick
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_version: "1.31"
+      sonobuoy_mode: quick
+
+- job:
+    name: e2e-tests-gardener-1.31-calico
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_version: "1.31"
+      networking_type: calico
+
+- job:
+    name: e2e-tests-gardener-1.31-cilium
+    parent: e2e-tests-gardener
+    vars:
+      kubernetes_version: "1.31"
+      networking_type: cilium
+
 - project:
     merge-mode: squash-merge
     default-branch: main
@@ -160,6 +181,7 @@
       jobs:
         - e2e-tests-gardener-1.29-quick
         - e2e-tests-gardener-1.30-quick
+        - e2e-tests-gardener-1.31-quick
         - e2e-tests-openstack
     periodic-hourly:
       jobs:
