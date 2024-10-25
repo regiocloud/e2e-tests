@@ -108,13 +108,6 @@
       - name: semaphore-e2e-tests-openstack
 
 - job:
-    name: e2e-tests-gardener-1.28-quick
-    parent: e2e-tests-gardener
-    vars:
-      kubernetes_version: "1.28"
-      sonobuoy_mode: quick
-
-- job:
     name: e2e-tests-gardener-1.29-quick
     parent: e2e-tests-gardener
     vars:
@@ -122,25 +115,11 @@
       sonobuoy_mode: quick
 
 - job:
-    name: e2e-tests-gardener-1.28-calico
-    parent: e2e-tests-gardener
-    vars:
-      kubernetes_version: "1.28"
-      networking_type: calico
-
-- job:
     name: e2e-tests-gardener-1.29-calico
     parent: e2e-tests-gardener
     vars:
       kubernetes_version: "1.29"
       networking_type: calico
-
-- job:
-    name: e2e-tests-gardener-1.28-cilium
-    parent: e2e-tests-gardener
-    vars:
-      kubernetes_version: "1.28"
-      networking_type: cilium
 
 - job:
     name: e2e-tests-gardener-1.29-cilium
@@ -158,17 +137,13 @@
         - yamllint
     post:
       jobs:
-        # - e2e-tests-gardener-1.28-quick
         # - e2e-tests-gardener-1.29-quick
         - e2e-tests-openstack
     periodic-hourly:
       jobs:
-        # - e2e-tests-gardener-1.28-quick
         # - e2e-tests-gardener-1.29-quick
         - e2e-tests-openstack
     # periodic-daily:
     #   jobs:
-    #     - e2e-tests-gardener-1.28-calico
     #     - e2e-tests-gardener-1.29-calico
-    #     - e2e-tests-gardener-1.28-cilium
     #     - e2e-tests-gardener-1.29-cilium
