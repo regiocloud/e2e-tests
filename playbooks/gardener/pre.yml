@@ -10,7 +10,7 @@
     # renovate: datasource=github-releases depName=kubernetes/kubernetes
     kubectl_version: '1.29.1'
     # renovate: datasource=github-releases depName=vmware-tanzu/sonobuoy
-    sonobuoy_version: '0.57.1'
+    sonobuoy_version: '0.57.2'
 
     gardenctl_binary: gardenctl
     kubectl_binary: kubectl
