@@ -179,14 +179,13 @@
         - yamllint
     post:
       jobs:
-        - e2e-tests-gardener-1.29-quick
-        - e2e-tests-gardener-1.30-quick
+        - e2e-tests-gardener-1.29-calico
+        - e2e-tests-gardener-1.30-calico
         - e2e-tests-openstack
     periodic-hourly:
       jobs:
-        # - e2e-tests-gardener-1.29-quick
         - e2e-tests-openstack
-    # periodic-daily:
-    #   jobs:
-    #     - e2e-tests-gardener-1.29-calico
-    #     - e2e-tests-gardener-1.29-cilium
+    periodic-daily:
+      jobs:
+        - e2e-tests-gardener-1.30-calico
+        - e2e-tests-gardener-1.30-cilium
