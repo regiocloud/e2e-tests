@@ -3,9 +3,13 @@
   hosts: all
 
   vars:
+    # renovate: datasource=github-releases depName=gardener/gardenctl-v2
     gardenctl_version: "2.6.1"
+    # renovate: datasource=github-releases depName=gardener/gardenlogin
     gardenlogin_version: "0.4.0"
+    # renovate: datasource=github-releases depName=kubernetes/kubernetes
     kubectl_version: "1.29.1"
+    # renovate: datasource=github-releases depName=vmware-tanzu/sonobuoy
     sonobuoy_version: "0.57.1"
 
     gardenctl_binary: gardenctl
