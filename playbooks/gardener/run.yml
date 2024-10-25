@@ -3,15 +3,17 @@
   hosts: all
 
   vars:
+    cilium_binary: cilium
     gardenctl_binary: gardenctl
     sonobuoy_binary: sonobuoy
 
     inner_name: "{{ zuul.build[:8] }}"
+    inner_networking_type: "{{ networking_type | default('calico') }}"
     inner_project_name: "{{ project_name | default('cruv4yqhsc') }}"
     inner_sonobuoy_mode: "{{ sonobuoy_mode | default('certified-conformance') }}"
 
   tasks:
-    - name: Run run script
+    - name: Run sonobuoy script
       ansible.builtin.shell:
         executable: /bin/bash
         chdir: "{{ zuul.project.src_dir | default('.') }}"
@@ -30,7 +32,7 @@
           {{ sonobuoy_binary }} run --mode {{ inner_sonobuoy_mode }} --wait --wait-output progress
       changed_when: false
 
-    - name: Run retrieve results script
+    - name: Run retrieve sonobuoy results script
       ansible.builtin.shell:
         executable: /bin/bash
         chdir: "{{ zuul.project.src_dir | default('.') }}"
@@ -50,3 +52,23 @@
       retries: 3
       delay: 60
       changed_when: false
+
+    - name: Run cilium script
+      ansible.builtin.shell:
+        executable: /bin/bash
+        chdir: "{{ zuul.project.src_dir | default('.') }}"
+        cmd: |
+          set -e
+          set -o pipefail
+          set -x
+
+          export KUBECONFIG=kubeconfig.yaml
+
+          [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
+          {{ gardenctl_binary }} target --garden e2e --project {{ inner_project_name }} --shoot {{ inner_name }}
+          eval $({{ gardenctl_binary }} kubectl-env bash)
+
+          {{ cilium_binary }} connectivity test
+
+      changed_when: false
+      when: inner_networking_type == 'cilium'
