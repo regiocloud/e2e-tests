@@ -8,7 +8,7 @@
     sonobuoy_binary: sonobuoy
 
     inner_name: "{{ zuul.build[:8] }}"
-    inner_networking_type: "{{ networking_type | default('calico') }}"
+    inner_networking_type: "{{ networking_type | default('cilium') }}"
     inner_project_name: "{{ project_name | default('cruv4yqhsc') }}"
     inner_sonobuoy_mode: "{{ sonobuoy_mode | default('certified-conformance') }}"
 
