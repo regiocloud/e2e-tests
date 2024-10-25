@@ -3,6 +3,8 @@
   hosts: all
 
   vars:
+    # renovate: datasource=github-tags depName=cilium/cilium
+    cilium_version: '1.16.3'
     # renovate: datasource=github-releases depName=gardener/gardenctl-v2
     gardenctl_version: '2.9.0'
     # renovate: datasource=github-releases depName=gardener/gardenlogin
@@ -50,6 +52,8 @@
           set -o pipefail
           set -x
 
+          ARCH=$(case $(uname -m) in x86_64) echo -n amd64 ;; aarch64) echo -n arm64 ;; *) echo -n $(uname -m) ;; esac)
+
           # install sonobuoy
           wget https://github.com/vmware-tanzu/sonobuoy/releases/download/v{{ sonobuoy_version }}/sonobuoy_{{ sonobuoy_version }}_linux_amd64.tar.gz
           tar xvzf sonobuoy_{{ sonobuoy_version }}_linux_amd64.tar.gz sonobuoy
@@ -74,6 +78,14 @@
           curl -LO https://dl.k8s.io/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/kubectl
+
+          {% if networking_type == 'cilium' %}
+          # install cilium
+          curl -L --fail --remote-name-all "https://github.com/cilium/cilium-cli/releases/download/{{ cilium_version }}/cilium-linux-${ARCH}.tar.gz{,.sha256sum}"
+          sha256sum --check "cilium-linux-${ARCH}.tar.gz.sha256sum"
+          sudo tar xzvfC "cilium-linux-${ARCH}.tar.gz" /usr/local/bin
+          rm cilium-linux-"${ARCH}".tar.gz{,.sha256sum}
+          {% endif %}
 
           # prepare e2e garden
           [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
