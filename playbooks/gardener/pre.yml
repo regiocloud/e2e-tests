@@ -4,7 +4,7 @@
 
   vars:
     # renovate: datasource=github-releases depName=gardener/gardenctl-v2
-    gardenctl_version: '2.6.1'
+    gardenctl_version: '2.9.0'
     # renovate: datasource=github-releases depName=gardener/gardenlogin
     gardenlogin_version: '0.4.0'
     # renovate: datasource=github-releases depName=kubernetes/kubernetes
