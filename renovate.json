@@ -2,5 +2,16 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "regexManagers":[
+    {
+      "fileMatch":[
+        "^playbooks\/gardener\/pre.yml$"
+      ],
+      "matchStrings":[
+        "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>.*?)\n.*?: '(?<currentValue>.*?)'"
+      ],
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    }
   ]
 }
