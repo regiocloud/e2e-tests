@@ -79,7 +79,7 @@
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/kubectl
 
-          {% if networking_type == 'cilium' %}
+          {% if inner_networking_type == 'cilium' %}
           # install cilium
           curl -L --fail --remote-name-all "https://github.com/cilium/cilium-cli/releases/download/{{ cilium_version }}/cilium-linux-${ARCH}.tar.gz{,.sha256sum}"
           sha256sum --check "cilium-linux-${ARCH}.tar.gz.sha256sum"
