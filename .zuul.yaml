@@ -181,7 +181,6 @@
       jobs:
         - e2e-tests-gardener-1.29-quick
         - e2e-tests-gardener-1.30-quick
-        - e2e-tests-gardener-1.31-quick
         - e2e-tests-openstack
     periodic-hourly:
       jobs:
