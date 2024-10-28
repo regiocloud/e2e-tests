@@ -3,7 +3,7 @@
   hosts: all
 
   vars:
-    # renovate: datasource=github-releases depName=cilium/cilium
+    # renovate: datasource=github-releases depName=cilium/cilium-cli
     cilium_version: '0.16.19'
     # renovate: datasource=github-releases depName=gardener/gardenctl-v2
     gardenctl_version: '2.9.0'
