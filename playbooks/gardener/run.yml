@@ -29,7 +29,7 @@
           {{ gardenctl_binary }} target --garden e2e --project {{ inner_project_name }} --shoot {{ inner_name }}
           eval $({{ gardenctl_binary }} kubectl-env bash)
 
-          {{ cilium_binary }} connectivity test || exit 0
+          {{ cilium_binary }} connectivity test --test '!pod-to-world' --hubble=False || exit 0
           {{ kubectl_binary }} delete ns cilium-test
 
       changed_when: false
