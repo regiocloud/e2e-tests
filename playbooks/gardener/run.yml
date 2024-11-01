@@ -34,6 +34,7 @@
 
       changed_when: false
       when: inner_networking_type == 'cilium'
+
     - name: Run sonobuoy script
       ansible.builtin.shell:
         executable: /bin/bash
