@@ -21,7 +21,7 @@ spec:
       - cri:
           name: containerd
         machine:
-          type: SCS-2V-4
+          type: SCS-4V-8
           image:
             name: gardenlinux
             version: "{{ inner_gardenlinux_version }}"
@@ -32,8 +32,8 @@ spec:
         zones:
           - nova
         name: worker-hktkk
-        minimum: 2
-        maximum: 3
+        minimum: 4
+        maximum: 4
         maxSurge: 1
   networking:
     nodes: 10.250.0.0/16
