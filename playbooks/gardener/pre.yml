@@ -8,7 +8,7 @@
     # renovate: datasource=github-releases depName=gardener/gardenctl-v2
     gardenctl_version: '2.9.0'
     # renovate: datasource=github-releases depName=gardener/gardenlogin
-    gardenlogin_version: '0.5.1'
+    gardenlogin_version: '0.6.0'
     # renovate: datasource=github-releases depName=kubernetes/kubernetes
     kubectl_version: '1.31.2'
     # renovate: datasource=github-releases depName=vmware-tanzu/sonobuoy
