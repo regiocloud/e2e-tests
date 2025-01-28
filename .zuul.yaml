@@ -132,21 +132,21 @@
     name: e2e-tests-gardener-1.30-quick
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.30.8"
+      kubernetes_version: "1.30.9"
       sonobuoy_mode: quick
 
 - job:
     name: e2e-tests-gardener-1.30-calico
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.30.8"
+      kubernetes_version: "1.30.9"
       networking_type: calico
 
 - job:
     name: e2e-tests-gardener-1.30-cilium
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.30.8"
+      kubernetes_version: "1.30.9"
       networking_type: cilium
 
 - job:
