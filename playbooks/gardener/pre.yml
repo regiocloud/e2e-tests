@@ -4,7 +4,7 @@
 
   vars:
     # renovate: datasource=github-releases depName=cilium/cilium-cli
-    cilium_version: '0.16.22'
+    cilium_version: '0.16.24'
     # renovate: datasource=github-releases depName=gardener/gardenctl-v2
     gardenctl_version: '2.9.0'
     # renovate: datasource=github-releases depName=gardener/gardenlogin
