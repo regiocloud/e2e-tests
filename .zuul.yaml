@@ -182,4 +182,3 @@
         - e2e-tests-openstack
         - e2e-tests-gardener-1.30-quick
         - e2e-tests-gardener-1.31-quick
-        - e2e-tests-gardener-1.32-quick
