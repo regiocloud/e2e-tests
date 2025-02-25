@@ -33,7 +33,9 @@
           {{ kubectl_binary }} delete ns cilium-test
 
       changed_when: false
-      when: inner_networking_type == 'cilium'
+      when:
+        - inner_networking_type == 'cilium'
+        - sonobuoy_mode != 'quick'
 
     - name: Run sonobuoy script
       ansible.builtin.shell:
