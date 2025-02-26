@@ -71,6 +71,7 @@
           {{ gardenctl_binary }} target --garden e2e --project {{ inner_project_name }} --shoot {{ inner_name }}
           eval $({{ gardenctl_binary }} kubectl-env bash)
 
+          {{ sonobuoy_binary }} status
           results=$({{ sonobuoy_binary }} retrieve)
           {{ sonobuoy_binary }} results $results
       retries: 3
