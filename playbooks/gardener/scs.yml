@@ -1,0 +1,65 @@
+---
+- name: Run play
+  hosts: all
+
+  vars:
+    cilium_binary: cilium
+    gardenctl_binary: gardenctl
+    kubectl_binary: kubectl
+    sonobuoy_binary: sonobuoy
+
+    standards_dir: /home/zuul/standards
+    venv_dir: /home/zuul/venv
+    zuul_work_dir: "{{ zuul.project.src_dir }}"
+
+    inner_name: "{{ zuul.build[:8] }}"
+    inner_project_name: "{{ project_name | default('cruv4yqhsc') }}"
+
+  tasks:
+    - name: Install python
+      ansible.builtin.include_role:
+        name: ensure-python
+
+    - name: Install pip
+      ansible.builtin.include_role:
+        name: ensure-pip
+
+    - name: Clone SovereignCloudStack/standards repository
+      ansible.builtin.git:
+        repo: "https://github.com/sovereigncloudstack/standards"
+        dest: "{{ standards_dir }}"
+
+    - name: Install requirements
+      ansible.builtin.pip:
+        requirements: "{{ standards_dir }}/Tests/requirements.txt"
+        virtualenv: "{{ venv_dir }}"
+        virtualenv_command: python3 -m venv
+
+    - name: Install kaas requirements
+      ansible.builtin.pip:
+        requirements: "{{ standards_dir }}/Tests/kaas/requirements.txt"
+        virtualenv: "{{ venv_dir }}"
+        virtualenv_command: python3 -m venv
+
+    - name: Run compliance script
+      ansible.builtin.shell:
+        executable: /bin/bash
+        chdir: "{{ zuul_work_dir }}"
+        cmd: |
+          set -e
+          set -o pipefail
+          set -x
+
+          export KUBECONFIG={{ zuul_work_dir }}/kubeconfig.yaml
+
+          [ -n "$GCTL_SESSION_ID" ] || [ -n "$TERM_SESSION_ID" ] || export GCTL_SESSION_ID=$(uuidgen)
+          {{ gardenctl_binary }} target --garden e2e --project {{ inner_project_name }} --shoot {{ inner_name }}
+          eval $({{ gardenctl_binary }} kubectl-env bash)
+
+          source  {{ venv_dir }}/bin/activate
+          cp $KUBECONFIG {{ standards_dir }}/Tests
+          pushd {{ standards_dir }}/Tests
+          python3 scs-compliance-check.py -v -a kubeconfig=kubeconfig.yaml -a subject_root=. -s gardener scs-compatible-kaas.yaml
+          popd
+
+      changed_when: false

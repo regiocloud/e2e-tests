@@ -97,6 +97,19 @@
       - name: semaphore-e2e-tests-gardener
 
 - job:
+    name: e2e-tests-gardener-scs
+    abstract: true
+    pre-run: playbooks/gardener/pre.yml
+    run: playbooks/gardener/scs.yml
+    post-run: playbooks/gardener/post.yml
+    timeout: 14400
+    secrets:
+      - name: secret
+        secret: SECRET_E2E_TESTS
+    semaphores:
+      - name: semaphore-e2e-tests-gardener
+
+- job:
     name: e2e-tests-openstack
     pre-run: playbooks/openstack/pre.yml
     run: playbooks/openstack/run.yml
@@ -106,6 +119,24 @@
         secret: SECRET_E2E_TESTS
     semaphores:
       - name: semaphore-e2e-tests-openstack
+
+- job:
+    name: e2e-tests-gardener-1.30-scs
+    parent: e2e-tests-gardener-scs
+    vars:
+      kubernetes_version: "1.30.10"
+
+- job:
+    name: e2e-tests-gardener-1.31-scs
+    parent: e2e-tests-gardener-scs
+    vars:
+      kubernetes_version: "1.31.6"
+
+- job:
+    name: e2e-tests-gardener-1.30-scs
+    parent: e2e-tests-gardener-scs
+    vars:
+      kubernetes_version: "1.30.10"
 
 - job:
     name: e2e-tests-gardener-1.30-quick
@@ -182,3 +213,7 @@
         - e2e-tests-openstack
         - e2e-tests-gardener-1.30-quick
         - e2e-tests-gardener-1.31-quick
+    post:
+      jobs:
+        - e2e-tests-gardener-1.30-scs:
+            branches: main
