@@ -1,0 +1,8 @@
+---
+- name: Noop play
+  hosts: all
+
+  tasks:
+    - name: Noop task
+      ansible.builtin.debug:
+        msg: Noop message
