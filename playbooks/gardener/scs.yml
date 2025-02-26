@@ -59,7 +59,7 @@
           source  {{ venv_dir }}/bin/activate
           cp $KUBECONFIG {{ standards_dir }}/Tests
           pushd {{ standards_dir }}/Tests
-          python3 scs-compliance-check.py -v -a kubeconfig=kubeconfig.yaml -a subject_root=. -s gardener scs-compatible-kaas.yaml
+          python3 scs-compliance-check.py --debug -v -a kubeconfig=kubeconfig.yaml -a subject_root=. -s gardener scs-compatible-kaas.yaml
           popd
 
       changed_when: false
