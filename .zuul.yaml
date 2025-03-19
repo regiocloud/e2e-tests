@@ -138,81 +138,81 @@
     name: e2e-tests-gardener-1.30-scs
     parent: e2e-tests-gardener-scs
     vars:
-      kubernetes_version: "1.30.10"
+      kubernetes_version: "1.30.11"
 
 - job:
     name: e2e-tests-gardener-1.31-scs
     parent: e2e-tests-gardener-scs
     vars:
-      kubernetes_version: "1.31.6"
+      kubernetes_version: "1.31.7"
 
 - job:
     name: e2e-tests-gardener-1.30-scs
     parent: e2e-tests-gardener-scs
     vars:
-      kubernetes_version: "1.30.10"
+      kubernetes_version: "1.30.11"
 
 - job:
     name: e2e-tests-gardener-1.30-quick
     parent: e2e-tests-gardener-quick
     vars:
-      kubernetes_version: "1.30.10"
+      kubernetes_version: "1.30.11"
       sonobuoy_mode: quick
 
 - job:
     name: e2e-tests-gardener-1.30-calico
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.30.10"
+      kubernetes_version: "1.30.11"
       networking_type: calico
 
 - job:
     name: e2e-tests-gardener-1.30-cilium
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.30.10"
+      kubernetes_version: "1.30.11"
       networking_type: cilium
 
 - job:
     name: e2e-tests-gardener-1.31-quick
     parent: e2e-tests-gardener-quick
     vars:
-      kubernetes_version: "1.31.6"
+      kubernetes_version: "1.31.7"
       sonobuoy_mode: quick
 
 - job:
     name: e2e-tests-gardener-1.31-calico
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.31.6"
+      kubernetes_version: "1.31.7"
       networking_type: calico
 
 - job:
     name: e2e-tests-gardener-1.31-cilium
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.31.6"
+      kubernetes_version: "1.31.7"
       networking_type: cilium
 
 - job:
     name: e2e-tests-gardener-1.32-quick
     parent: e2e-tests-gardener-quick
     vars:
-      kubernetes_version: "1.32.2"
+      kubernetes_version: "1.32.3"
       sonobuoy_mode: quick
 
 - job:
     name: e2e-tests-gardener-1.32-calico
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.32.2"
+      kubernetes_version: "1.32.3"
       networking_type: calico
 
 - job:
     name: e2e-tests-gardener-1.32-cilium
     parent: e2e-tests-gardener
     vars:
-      kubernetes_version: "1.32.2"
+      kubernetes_version: "1.32.3"
       networking_type: cilium
 
 - project:
