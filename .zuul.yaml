@@ -147,12 +147,6 @@
       kubernetes_version: "1.31.7"
 
 - job:
-    name: e2e-tests-gardener-1.30-scs
-    parent: e2e-tests-gardener-scs
-    vars:
-      kubernetes_version: "1.30.11"
-
-- job:
     name: e2e-tests-gardener-1.30-quick
     parent: e2e-tests-gardener-quick
     vars:
@@ -227,6 +221,7 @@
         - e2e-tests-openstack
         - e2e-tests-gardener-1.30-quick
         - e2e-tests-gardener-1.31-quick
+        - e2e-tests-gardener-1.32-quick
     post:
       jobs:
         - e2e-tests-gardener-1.30-scs:
